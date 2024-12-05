@@ -3,21 +3,21 @@ from .models import Employee
 
 
 class EmployeeForm(forms.ModelForm):
-    employee_id = forms.NumberInput()
-    first_name = forms.TextInput()
-    last_name = forms.TextInput()
-    department = forms.TextInput()
-    job_title = forms.TextInput()
-    salary = forms.NumberInput()
 
     class Meta:
         model = Employee
         fields = ['employee_id', 'first_name', 'last_name', 'department', 'job_title', 'salary']
+        labels = {'employee_id':'Employee ID',
+                  'first_name':'First Name',
+                  'last_name':'Last Name',
+                  'department':'Department',
+                  'job_title':'Job Title',
+                  'salary':'Salary'}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control'})
+            self.fields[field].widget.attrs.update({'class': 'form-control mb-2'})
 
 
 class EDCF(forms.ModelChoiceField):
@@ -34,4 +34,23 @@ class EmployeeDeleteForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control'})
+            self.fields[field].widget.attrs.update({'class': 'form-control mb-2'})
+
+class EmployeeUpdateForm(forms.Form):
+    employee_to_update = EDCF(queryset=Employee.objects.all(),empty_label="(None)")
+
+    employee_id = forms.IntegerField(required=False, label='Employee ID')
+    first_name = forms.CharField(required=False, label='First Name')
+    last_name = forms.CharField(required=False, label='Last Name')
+    department = forms.CharField(required=False, label='Department')
+    job_title = forms.CharField(required=False, label='Job Title')
+    salary = forms.IntegerField(required=False, label='Salary')
+
+    class Meta:
+        model = Employee
+        fields = ['employee_id', 'first_name', 'last_name', 'department', 'job_title', 'salary']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control mb-2'})

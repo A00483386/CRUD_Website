@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from crud.forms import EmployeeForm, EmployeeDeleteForm
+from crud.forms import EmployeeForm, EmployeeDeleteForm, EmployeeUpdateForm
 from crud.models import Employee
 
 
@@ -59,7 +59,56 @@ def viewusers(request):
     Employees = Employee.objects.all()
     return render(request, 'viewusers.html', {'employees' : Employees})
 
-def updateusers(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def updateuser(request):
+    if request.POST:
+        form = EmployeeUpdateForm(request.POST)
+        if form.is_valid():
+            eid_int = int(form.cleaned_data['employee_to_update'].__str__())
+            e = Employee.objects.filter(employee_id=eid_int).first()
+            if e is not None:
+                eid = form.cleaned_data.get('employee_id')
+                fn = form.cleaned_data.get('first_name')
+                ln = form.cleaned_data.get('last_name')
+                dep = form.cleaned_data.get('department')
+                sal = form.cleaned_data.get('salary')
+                jt = form.cleaned_data.get('job_title')
+
+                if fn != '':
+                    e.first_name = fn
+                if ln != '':
+                    e.last_name = ln
+                if dep != '':
+                    e.department = dep
+                if sal is not None:
+                    e.salary = sal
+                if jt != '':
+                    e.job_title = jt
+                if eid is not None:
+                    e.employee_id = eid
+
+                e.save()
+                if eid is not None:
+                    Employee.objects.filter(employee_id=eid_int).first().delete()
+
+
+                return render(request, 'updateuser.html', {
+                    'form': EmployeeUpdateForm,
+                    'color': 'green',
+                    'success': 'Updated!'})
+            else:
+                return render(request, 'updateuser.html', {
+                    'form': EmployeeUpdateForm,
+                    'color': 'red',
+                    'success': 'An error occured while updating employee information!'})
+        else:
+            return render(request, 'updateuser.html', {
+                'form': EmployeeUpdateForm,
+                'color': 'red',
+                'success': 'An error occured while updating employee information!'})
+    else:
+        return render(request, 'updateuser.html', {
+            'form': EmployeeUpdateForm,
+            'color': 'green',
+            'success': ''})
 
 

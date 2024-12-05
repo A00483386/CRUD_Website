@@ -6,5 +6,5 @@ urlpatterns = [
     path("createemployee", views.createuser, name="createuser"),
     path("deleteemployee", views.deleteuser, name="deleteuser"),
     path("viewemployees", views.viewusers, name="viewusers"),
-    path("updateemployee", views.viewusers, name="updateuser"),
+    path("updateemployee", views.updateuser, name="updateuser"),
 ]
