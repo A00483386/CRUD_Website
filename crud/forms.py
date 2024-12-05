@@ -2,11 +2,12 @@ from django import forms
 from .models import Student, SupportService, ServiceProvider,Appointment
 from .models import Feedback
 
-# 学生表单
+
+
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['student_id', 'name', 'age', 'email']
+        fields = ['name', 'age', 'email']  # 确保字段完整
 
 # 支持服务表单
 class SupportServiceForm(forms.ModelForm):

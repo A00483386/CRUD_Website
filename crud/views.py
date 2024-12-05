@@ -30,14 +30,14 @@ def view_students(request):
 
 def update_student(request, student_id):
     student = get_object_or_404(Student, student_id=student_id)
-    if request.method == "POST":
+    if request.method == 'POST':
         form = StudentForm(request.POST, instance=student)
         if form.is_valid():
             form.save()
-            return redirect('view_students')
+            return redirect('view_students')  # 重定向到学生列表页面
     else:
         form = StudentForm(instance=student)
-    return render(request, 'update_student.html', {'form': form})
+    return render(request, 'update_student.html', {'form': form, 'student': student})
 
 def delete_student(request, student_id):
     student = get_object_or_404(Student, student_id=student_id)

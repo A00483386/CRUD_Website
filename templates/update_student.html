@@ -4,14 +4,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Update Student</title>
+    <title>Edit Student</title>
 </head>
 <body>
-    <h1>Update Student</h1>
+    <h1>Edit Student</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Update</button>
+        <button type="submit">Save Changes</button>
     </form>
     <a href="{% url 'view_students' %}">Cancel</a>
 </body>
