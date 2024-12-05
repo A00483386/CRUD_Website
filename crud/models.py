@@ -16,14 +16,12 @@ class SupportService(models.Model):
     def __str__(self):
         return self.service_name
 
+
 class Student(models.Model):
-    student_id = models.CharField(max_length=10, primary_key=True)
+    student_id = models.CharField(max_length=50, primary_key=True)
     name = models.CharField(max_length=100)
     age = models.IntegerField()
     email = models.EmailField()
-
-    def __str__(self):
-        return self.name
 
 class Appointment(models.Model):
     appointment_id = models.AutoField(primary_key=True)

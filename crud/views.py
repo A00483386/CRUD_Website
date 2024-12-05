@@ -14,12 +14,14 @@ from .forms import ServiceProviderForm
 def index(request):
     return render(request, 'index.html')  # 渲染主页模板
 
+
+
 def create_student(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = StudentForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('view_students')
+            form.save()  # 保存 student_id 到数据库
+            return redirect('view_students')  # 跳转到学生列表
     else:
         form = StudentForm()
     return render(request, 'create_student.html', {'form': form})

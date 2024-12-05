@@ -4,10 +4,11 @@ from .models import Feedback
 
 
 
+
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['name', 'age', 'email']  # 确保字段完整
+        fields = ['student_id', 'name', 'age', 'email']  # 包括 student_id
 
 # 支持服务表单
 class SupportServiceForm(forms.ModelForm):

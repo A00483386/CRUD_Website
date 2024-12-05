@@ -11,6 +11,8 @@ urlpatterns = [
     path('view_students/', views.view_students, name='view_students'),
     path('update_student/<str:student_id>/', views.update_student, name='update_student'),
     path('delete_student/<str:student_id>/', views.delete_student, name='delete_student'),
+
+
     # 添加其他实体的 CRUD 路由
 
     path('create_support_service/', views.create_support_service, name='create_support_service'),
