@@ -1,0 +1,28 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>View Employees</h1>
+<table class="table overflow-scroll">
+	<thead>
+		<tr>
+            <th scope="col">Employee #</th>
+			<th scope="col">First Name</th>
+			<th scope="col">Last Name</th>
+			<th scope="col">Department</th>
+			<th scope="col">Job Title</th>
+            <th scope="col">Salary</th>
+		</tr>
+	</thead>
+	<tbody>
+    {% for employee in employees %}
+		<tr>
+			<th scope="row">{{ employee.employee_id }}</th>
+			<td>{{ employee.first_name }}</td>
+			<td>{{ employee.last_name }}</td>
+			<td>{{ employee.department }}</td>
+            <td>{{ employee.job_title }}</td>
+            <td>{{ employee.salary }}</td>
+		</tr>
+    {% endfor %}
+	</tbody>
+</table>
+{% endblock %}
