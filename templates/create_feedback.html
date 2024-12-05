@@ -1,0 +1,10 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>Create Feedback</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Feedback</button>
+</form>
+<a href="{% url 'view_feedbacks' %}">Cancel</a>
+{% endblock %}

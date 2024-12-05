@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Delete Student</h1>
+<p>Are you sure you want to delete {{ student.name }}?</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+</form>
+<p style="color: {{ color }}">{{ message }}</p>
+{% endblock %}

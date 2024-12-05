@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Student</title>
+</head>
+<body>
+    <h1>Delete Student</h1>
+    <p>Are you sure you want to delete the student "{{ student.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+    </form>
+    <a href="{% url 'view_students' %}">Cancel</a>
+</body>
+</html>
+{% endblock %}

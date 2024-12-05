@@ -1,0 +1,10 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>Appointment for {{ service.service_name }}</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Confirm Appointment</button>
+</form>
+<a href="{% url 'view_support_services' %}" class="btn btn-secondary">Cancel</a>
+{% endblock %}
