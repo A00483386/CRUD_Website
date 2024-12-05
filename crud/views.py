@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from crud.forms import EmployeeForm
+from crud.forms import EmployeeForm, EmployeeDeleteForm
 from crud.models import Employee
 
 
@@ -19,17 +19,41 @@ def createuser(request):
                 "color": "green",
                 "created": "Success!"})
         else:
-            return render(request, 'createuser.html', {
-                "form": EmployeeForm,
-                "color": "red",
-                "created": "Error!"})
+            if Employee.objects.filter(employee_id=form.employee_id).exists():
+                return render(request, 'createuser.html', {
+                    "form": EmployeeForm,
+                    "color": "red",
+                    "created": "An Employee with this Employee ID already exists!"})
+            elif len(form.first_name)>32 or len(form.last_name)>32:
+                return render(request, 'createuser.html', {
+                    "form": EmployeeForm,
+                    "color": "red",
+                    "created": "First and Last names can only be 32 characters each!"})
+            else:
+                return render(request, 'createuser.html', {
+                    "form": EmployeeForm,
+                    "color": "red",
+                    "created": "There was an internal error, please try again!"})
     return render(request, 'createuser.html', {
         "form": EmployeeForm,
         "color": "green",
         "created": ""})
 
 def deleteuser(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    if request.POST:
+        form = EmployeeDeleteForm(request.POST)
+        if form.is_valid():
+            Employee.objects.filter(employee_id=int(form.cleaned_data['employee_id'].__str__())).delete()
+            return render(request, 'deleteuser.html', {
+                'form': EmployeeDeleteForm,
+                'deleted': "Deleted!",
+                'color': 'green'})
+        else:
+            return render(request, 'deleteuser.html', {
+                'form': EmployeeDeleteForm,
+                'deleted': "Error, could not delete employee with this Employee ID!",
+                'color': 'red'})
+    return render(request, 'deleteuser.html', {'form': EmployeeDeleteForm, 'deleted': "", 'color': 'green'})
 
 def viewusers(request):
     Employees = Employee.objects.all()
